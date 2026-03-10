@@ -1,0 +1,27 @@
+{
+  "name": "relog",
+  "version": "1.0.0",
+  "description": "Sistema web que detecta quando a sessão do GitHub expira ou buga e oferece um **botão de re-login automático** para reautenticar com um único clique.",
+  "main": "index.js",
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently --kill-others --names \"backend,frontend\" --prefix-colors \"blue,green\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "start": "concurrently --kill-others --names \"backend,frontend\" --prefix-colors \"blue,green\" \"npm start --prefix backend\" \"npm run dev --prefix frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanazklk0/relog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lanazklk0/relog/issues"
+  },
+  "homepage": "https://github.com/lanazklk0/relog#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

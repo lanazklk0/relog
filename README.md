@@ -2,6 +2,8 @@
 
 Sistema web que detecta quando a sessão do GitHub expira ou buga e oferece um **botão de re-login automático** para reautenticar com um único clique.
 
+![Preview](https://github.com/user-attachments/assets/32088914-44f0-42b5-ad15-9686c5647df8)
+
 ---
 
 ## ✨ Funcionalidades
@@ -15,149 +17,119 @@ Sistema web que detecta quando a sessão do GitHub expira ou buga e oferece um *
 
 ---
 
-## 🖥️ Preview
+## 💻 Como rodar no seu PC
 
-```
-┌─────────────────────────────────┐
-│           ⚫ GitHub             │
-│             Relog               │
-│   Re-login automático...        │
-│                                 │
-│  ┌───────────────────────────┐  │
-│  │ 🐙  Login com GitHub      │  │  ← tela inicial (não logado)
-│  └───────────────────────────┘  │
-└─────────────────────────────────┘
+### O que você precisa ter instalado
 
-┌─────────────────────────────────┐
-│  ┌─────────────────────────┐    │
-│  │  🖼️  Avatar              │    │
-│  │  Nome do Usuário        │    │  ← tela logado
-│  │  @username              │    │
-│  │  Repos: 42 | Seguid: 10 │    │
-│  │        [ Sair ]         │    │
-│  └─────────────────────────┘    │
-└─────────────────────────────────┘
+- **Node.js 18+** → baixe em **[nodejs.org](https://nodejs.org)** (clique em "LTS")
+- **Git** → baixe em **[git-scm.com](https://git-scm.com)**
 
-┌─────────────────────────────────┐
-│  ⚠️  Sessão expirada!           │
-│  Sua sessão bugou ou expirou.   │  ← sessão expirada
-│  ┌───────────────────────────┐  │
-│  │ 🐙  Re-logar com GitHub   │  │
-│  └───────────────────────────┘  │
-└─────────────────────────────────┘
+Depois de instalar, abra o terminal e confira:
+
+```bash
+node -v   # deve aparecer v18... ou superior
 ```
 
 ---
 
-## 🗂️ Estrutura
+### 3 passos e pronto
 
+**1. Baixe o projeto**
+
+Abra o terminal (CMD no Windows, Terminal no Mac/Linux):
+
+```bash
+git clone https://github.com/lanazklk0/relog.git
+cd relog
+npm run setup
 ```
-relog/
-├── backend/
-│   ├── package.json
-│   ├── .env.example
-│   └── src/
-│       ├── index.js              # Servidor Express
-│       ├── routes/
-│       │   └── auth.js           # OAuth routes
-│       └── middleware/
-│           └── session.js        # Session middleware
-└── frontend/
-    ├── package.json
-    ├── vite.config.js
-    ├── tailwind.config.js
-    ├── index.html
-    └── src/
-        ├── main.jsx
-        ├── App.jsx
-        ├── components/
-        │   ├── LoginButton.jsx   # Botão login/re-login
-        │   ├── UserCard.jsx      # Card do usuário logado
-        │   └── SessionStatus.jsx # Banner de sessão expirada
-        └── hooks/
-            └── useAuth.js        # Hook de autenticação
-```
+
+O comando `npm run setup` vai te guiar pelo processo todo — ele vai pedir as credenciais do GitHub e configurar tudo automaticamente.
 
 ---
 
-## ⚙️ Configuração
+**2. Durante o setup, crie um GitHub OAuth App**
 
-### 1. Criar um GitHub OAuth App
+O script vai te pedir um **Client ID** e um **Client Secret**. Para conseguir esses valores:
 
-1. Acesse [github.com/settings/developers](https://github.com/settings/developers)
+1. Abra: **[github.com/settings/developers](https://github.com/settings/developers)**
 2. Clique em **"New OAuth App"**
-3. Preencha:
-   - **Application name:** `Relog` (ou qualquer nome)
-   - **Homepage URL:** `http://localhost:5173`
-   - **Authorization callback URL:** `http://localhost:3001/auth/github/callback`
+3. Preencha exatamente assim:
+
+   | Campo | O que colocar |
+   |-------|---------------|
+   | Application name | `Relog` |
+   | Homepage URL | `http://localhost:5173` |
+   | Authorization callback URL | `http://localhost:3001/auth/github/callback` |
+
 4. Clique em **"Register application"**
-5. Copie o **Client ID** e gere um **Client Secret**
+5. Copie o **Client ID** que apareceu
+6. Clique em **"Generate a new client secret"** e copie o valor
 
-### 2. Configurar o backend
+> ⚠️ **Importante:** salve o Client Secret agora — ele só aparece uma vez!
 
-```bash
-cd backend
-cp .env.example .env
-```
-
-Edite o `.env`:
-
-```env
-GITHUB_CLIENT_ID=seu_client_id_aqui
-GITHUB_CLIENT_SECRET=seu_client_secret_aqui
-SESSION_SECRET=uma_string_aleatoria_longa_e_segura
-FRONTEND_URL=http://localhost:5173
-PORT=3001
-```
+Cole esses valores quando o script perguntar.
 
 ---
 
-## 🚀 Como rodar
-
-### Backend
+**3. Rode o projeto**
 
 ```bash
-cd backend
-npm install
-npm run dev      # desenvolvimento (nodemon)
-# ou
-npm start        # produção
-```
-
-O backend estará disponível em `http://localhost:3001`.
-
-### Frontend
-
-```bash
-cd frontend
-npm install
 npm run dev
 ```
 
-O frontend estará disponível em `http://localhost:5173`.
+Quando aparecer `Local: http://localhost:5173/` no terminal, abra o navegador nesse endereço e o app estará funcionando! 🎉
+
+---
+
+## ❓ Problemas comuns
+
+**Login não funciona / volta com erro**
+- Confirme que a *Authorization callback URL* no GitHub é **exatamente** `http://localhost:3001/auth/github/callback`
+- Rode `npm run setup` de novo para reconfigurar as credenciais
+
+**"Porta já em uso"**
+- Feche outros programas que possam estar usando a porta 3001 ou 5173
+
+**"node não encontrado"**
+- Instale o Node.js em [nodejs.org](https://nodejs.org) e abra um **novo** terminal
+
+---
+
+## 🗂️ Estrutura do projeto
+
+```
+relog/
+├── package.json              ← scripts raiz (npm run setup / npm run dev)
+├── scripts/
+│   └── setup.js              ← setup interativo (pede credenciais, instala tudo)
+├── backend/
+│   ├── .env.example
+│   └── src/
+│       ├── index.js          ← servidor Express
+│       ├── routes/auth.js    ← rotas OAuth
+│       └── middleware/session.js
+└── frontend/
+    └── src/
+        ├── App.jsx
+        ├── hooks/useAuth.js          ← verifica sessão a cada 30s
+        └── components/
+            ├── LoginButton.jsx       ← botão login/re-login
+            ├── UserCard.jsx          ← card do usuário logado
+            └── SessionStatus.jsx     ← banner de sessão expirada
+```
 
 ---
 
 ## 🔗 Rotas da API
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| `GET` | `/auth/github` | Inicia o fluxo OAuth (redireciona para GitHub) |
-| `GET` | `/auth/github/callback` | Callback do GitHub; salva sessão |
-| `GET` | `/auth/me` | Retorna dados do usuário logado (401 se não logado) |
-| `GET` | `/auth/logout` | Encerra a sessão e redireciona para o frontend |
-| `GET` | `/auth/refresh` | Verifica e renova a sessão atual |
-| `GET` | `/health` | Health check do servidor |
-
----
-
-## 🛡️ Segurança
-
-- Cookies `httpOnly` — protegidos contra XSS
-- `sameSite: lax` em desenvolvimento, `none` em produção (com HTTPS)
-- `secure: true` em produção
-- Client Secret nunca exposto ao frontend
-- CORS restrito à URL do frontend
+| Rota | Descrição |
+|------|-----------|
+| `GET /auth/github` | Inicia o fluxo OAuth |
+| `GET /auth/github/callback` | Callback do GitHub; salva sessão |
+| `GET /auth/me` | Retorna dados do usuário (401 se não logado) |
+| `GET /auth/logout` | Encerra a sessão |
+| `GET /auth/refresh` | Verifica/renova a sessão |
 
 ---
 
