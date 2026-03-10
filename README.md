@@ -39,10 +39,13 @@ node -v   # deve aparecer v18... ou superior
 Abra o terminal (CMD no Windows, Terminal no Mac/Linux):
 
 ```bash
-git clone https://github.com/lanazklk0/relog.git
+git clone -b copilot/add-auto-relogin-button https://github.com/lanazklk0/relog.git
 cd relog
 npm run setup
 ```
+
+> 💡 O `-b copilot/add-auto-relogin-button` garante que você baixa o código completo.  
+> Quando o PR for mesclado ao main, bastará usar `git clone https://github.com/lanazklk0/relog.git`.
 
 O comando `npm run setup` vai te guiar pelo processo todo — ele vai pedir as credenciais do GitHub e configurar tudo automaticamente.
 
